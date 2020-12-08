@@ -1,0 +1,148 @@
+{% extends 'fareast/main.html' %}
+{% load static %}
+{% static "images" as baseURL %}
+{% block content %}
+
+{% include 'fareast/navbar.html' %}
+
+
+<script type="text/javascript">
+  var user = '{{request.user}}'
+  var a = "{% url  'login' %}"
+
+  function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getToken('csrftoken');
+</script>
+
+<div class="container-fluid title pt-5">
+  <h1>Our Menu</h1>
+</div>
+
+<div class="container  text-center mt-4 mb-20 w-100">
+
+  <div class="d-flex justify-content-center">
+    <ul class="nav nav-pills nav-justified " role="tablist">
+      <li class="nav-item">
+        <a href="#step-1" id="step1-tab" class="nav-link active" aria-selected="true" data-toggle="tab"
+        role="tab">Breakfast</a>
+      </li>
+      <li class="nav-item">
+        <a href="#step-2" id="step2-tab" class="nav-link" aria-selected="false" data-toggle="tab"
+        role="tab">Lunch</a>
+      </li>
+      <li class="nav-item">
+        <a href="#step-3" id="step3-tab" class="nav-link" aria-selected="false" data-toggle="tab"
+        role="tab">Dinner</a>
+      </li>
+    </ul>
+  </div>
+
+
+
+  <div class="tab-content" style="margin-bottom:100px;">
+<!--breakfast-->
+    <div class="tab-pane fade show active" id="step-1" aria-labelledby="step1-tab" role="tabpanel">
+      <div class="container mt-5">
+        <div class="row">
+     {% for dish in dishes %}
+       {% if dish.category == 'breakfast' %}
+          <div class="col-lg-6 col-sm-12">
+          <div class="card" style="max-width: 540px;">
+              <div class="row no-gutters">
+               <div class="col-md-4 embed-responsive embed-responsive-21by9">
+                 <img src="{{dish.img.url}}" class="card-img embed-responsive-item" alt="...">
+               </div>
+               <div class="col">
+                 <div class="card-body">
+                   <h5 class="price">₱{{dish.price|floatformat:2}}</h5>
+                   <h5 class="card-title">{{dish.name}}</h5>
+                   <p class="card-text">{{dish.desc}}</p>
+                   <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                   <button data-product="{{dish.id}}" data-action="add" class="btn add-btn update-cart">ADD TO MY BAG</button>
+                 </div>
+               </div>
+              </div>
+              </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+        </div>
+      </div>
+    </div>
+<!--lunch-->
+    <div class="tab-pane fade" id="step-2" aria-labelledby="step2-tab" role="tabpanel">
+      <div class="container mt-5">
+        <div class="row">
+          {% for dish in dishes %}
+             {% if dish.category == 'lunch' %}
+             <div class="col-lg-6 col-sm-12">
+             <div class="card" style="max-width: 540px;">
+                 <div class="row no-gutters">
+                  <div class="col-md-4 embed-responsive embed-responsive-21by9">
+                    <img src="{{dish.img.url}}" class="card-img embed-responsive-item" alt="...">
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <h5 class="price">₱{{dish.price|floatformat:2}}</h5>
+                      <h5 class="card-title">{{dish.name}}</h5>
+                      <p class="card-text">{{dish.desc}}</p>
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <button data-product="{{dish.id}}" data-action="add" class="btn add-btn update-cart">ADD TO MY BAG</button>
+                    </div>
+                  </div>
+                 </div>
+                 </div>
+             </div>
+              {% endif %}
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+<!--Dinner-->
+    <div class="tab-pane fade" id="step-3" aria-labelledby="step3-tab" role="tabpanel">
+      <div class="container mt-5">
+        <div class="row">
+          {% for dish in dishes %}
+             {% if dish.category == 'dinner' %}
+             <div class="col-lg-6 col-sm-12">
+             <div class="card" style="max-width: 540px;">
+                 <div class="row no-gutters">
+                  <div class="col-md-4 embed-responsive embed-responsive-21by9">
+                    <img src="{{dish.img.url}}" class="card-img embed-responsive-item" alt="...">
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <h5 class="price">₱{{dish.price|floatformat:2}}</h5>
+                      <h5 class="card-title">{{dish.name}}</h5>
+                      <p class="card-text">{{dish.desc}}</p>
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <button data-product="{{dish.id}}" data-action="add" class="btn add-btn update-cart">ADD TO MY BAG</button>
+                    </div>
+                  </div>
+                 </div>
+                 </div>
+             </div>
+              {% endif %}
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'javascript/bag.js'%}"></script>
+{% endblock content %}

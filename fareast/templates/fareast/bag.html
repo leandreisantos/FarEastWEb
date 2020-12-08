@@ -1,0 +1,82 @@
+{% extends 'fareast/main.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'fareast/navbar.html'%}
+<script type="text/javascript">
+  var user = '{{request.user}}'
+  var a = "{% url  'login' %}"
+
+  function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getToken('csrftoken');
+</script>
+
+<div class="row px-5">
+  <div class="col-lg-8">
+    <br>
+    <br>
+    <div class="box-element">
+      <div class="cart-row">
+        <div style="flex:2"><strong>Item</strong></div>
+        <div style="flex:1"><strong>Price</strong></div>
+        <div style="flex:1"><strong>Quantity</strong></div>
+        <div style="flex:1"><strong>Total</strong></div>
+      </div>
+      {% for item in items %}
+      <div class="cart-row">
+        <div style="flex:2"><button data-product={{item.product.id}} data-action="delete" class="deleted update-cart"><i class="far fa-trash-alt"></i></button>{{item.product.name}}</div>
+        <div style="flex:1">{{item.product.price|floatformat:2}}</div>
+        <div style="flex:1" class="d-flex">
+          <p class="quantity pt-3">{{item.quantity}}</p>
+          <div class="quantity">
+            <button data-product={{item.product.id}} data-action="add" class="chg-quantity update-cart"><i class="fas fa-plus"></i></button>
+            <button data-product={{item.product.id}} data-action="remove" class="chg-quantity update-cart"><i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div style="flex:1">₱{{item.get_total}}</div>
+      </div>
+      {% endfor %}
+      <div class="box-element">
+        <a class="btn btn-outline-dark" href="{% url 'menu' %}">Continue Order</a>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-lg-4 receipt">
+    <h4>Cart Totals</h4>
+    <div class="row">
+      <div class="col">
+        <h6>Subtotal</h6>
+        <h6>Items</h6>
+        <h6>Delivery</h6>
+        <hr>
+        <h6>Total</h6>
+      </div>
+      <div class="col">
+        <h6>₱{{order.get_cart_total|floatformat:2}}</h6>
+        <h6>{{order.get_cart_items}}</h6>
+        <h6>₱20.00</h3>
+          <hr>
+        <h6>₱{{order.get_cart_total|floatformat:2}}</h6>
+      </div>
+    </div>
+    <a style="float:right; margin:5px" href="{% url 'checkout' %}" class="btn check-out">Proceed to Check Out</a>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'javascript/bag.js'%}"></script>
+{% endblock content %}

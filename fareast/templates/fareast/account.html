@@ -1,0 +1,109 @@
+{% extends 'fareast/main.html' %}
+{% load static %}
+{% static "images" as baseURL %}
+{% block content %}
+
+{% include 'fareast/navbar.html' %}
+
+<div class="container">
+  <div class="container mt-4 mb-20 w-300">
+    <h1>{{request.user}}</h1>
+    <div class="d-flex justify-content-center">
+      <ul class="nav nav-pills nav-justified " role="tablist">
+        <li class="nav-item">
+          <a href="#step-1" id="step1-tab" class="nav-link active" aria-selected="true" data-toggle="tab"
+          role="tab">Account</a>
+        </li>
+        <li class="nav-item">
+          <a href="#step-2" id="step2-tab" class="nav-link" aria-selected="false" data-toggle="tab"
+          role="tab">NOTIFICATIONS</a>
+        </li>
+        <li class="nav-item">
+          <a href="#step-3" id="step3-tab" class="nav-link" aria-selected="false" data-toggle="tab"
+          role="tab">HISTORY</a>
+        </li>
+        <li class="nav-item">
+          <a href="#step-3" id="step3-tab" class="nav-link" aria-selected="false" data-toggle="tab"
+          role="tab">FAVORITES</a>
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="tab-content" style="margin-bottom:100px;">
+  <!--breakfast-->
+      <div class="tab-pane fade show active" id="step-1" aria-labelledby="step1-tab" role="tabpanel">
+        <div class="container mt-5 px-5">
+            <h1>{{request.user}}</h1>
+        </div>
+      </div>
+  <!--lunch-->
+      <div class="tab-pane fade" id="step-2" aria-labelledby="step2-tab" role="tabpanel">
+        <div class="container mt-5">
+          <div class="row">
+            {% for dish in dishes %}
+               {% if dish.category == 'lunch' %}
+               <div class="col-lg-6 col-sm-12">
+               <div class="card" style="max-width: 540px;">
+                   <div class="row no-gutters">
+                    <div class="col-md-4 embed-responsive embed-responsive-21by9">
+                      <img src="{{dish.img.url}}" class="card-img embed-responsive-item" alt="...">
+                    </div>
+                    <div class="col">
+                      <div class="card-body">
+                        <h5 class="price">₱{{dish.price|floatformat:2}}</h5>
+                        <h5 class="card-title">{{dish.name}}</h5>
+                        <p class="card-text">{{dish.desc}}</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <button data-product="{{dish.id}}" data-action="add" class="btn add-btn update-cart">ADD TO MY BAG</button>
+                      </div>
+                    </div>
+                   </div>
+                   </div>
+               </div>
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+  <!--Dinner-->
+      <div class="tab-pane fade" id="step-3" aria-labelledby="step3-tab" role="tabpanel">
+        <div class="container mt-5">
+          <div class="row px-5">
+            <div class="col-lg-12">
+              <br>
+              <br>
+              <div class="box-element">
+                <div class="cart-row">
+                  <div style="flex:1"><strong>Date</strong></div>
+                  <div style="flex:1"><strong>Price</strong></div>
+                  <div style="flex:1"><strong>Quantity</strong></div>
+                  <div style="flex:1"><strong>Total</strong></div>
+                </div>
+                {% for item in items %}
+                <div class="cart-row">
+                  <div style="flex:2"><button data-product={{item.product.id}} data-action="delete" class="deleted update-cart"><i class="far fa-trash-alt"></i></button>{{item.product.name}}</div>
+                  <div style="flex:1">{{item.product.price|floatformat:2}}</div>
+                  <div style="flex:1" class="d-flex">
+                    <p class="quantity pt-3">{{item.quantity}}</p>
+                    <div class="quantity">
+                      <button data-product={{item.product.id}} data-action="add" class="chg-quantity update-cart"><i class="fas fa-plus"></i></button>
+                      <button data-product={{item.product.id}} data-action="remove" class="chg-quantity update-cart"><i class="fas fa-minus"></i></button>
+                    </div>
+                  </div>
+                  <div style="flex:1">₱{{item.get_total}}</div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

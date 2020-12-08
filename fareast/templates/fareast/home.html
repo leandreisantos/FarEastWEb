@@ -1,0 +1,109 @@
+{% extends 'fareast/main.html' %}
+{% load static %}
+{% static "images" as baseURL %}
+{% block content %}
+
+<script type="text/javascript">
+  var user = '{{request.user}}'
+  var a = "{% url  'login' %}"
+
+  function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getToken('csrftoken');
+</script>
+
+{% include 'fareast/navbar.html' %}
+<!--About us-->
+
+{% include 'fareast/welcome_about.html' %}
+
+{% include 'fareast/services.html' %}
+
+
+<!--Specialties-->
+<div class="container speacialties">
+  <div class="row">
+
+    <div class="col col-lg-5 col-md-12 col-sm-12 col-12 mb-4 desc">
+        <span>Discover</span>
+        <h1>OUR MENU</h1>
+        <p>We serve fresh filipino foods in our restaurants that you like. Furthermore, the taste is unbelievable that you can't anticipate and they like a lovely customer.
+          And to buy our food could be repeated by our beloved customers.</p>
+        <a href="{% url 'menu' %}" class="btn btn-primary">View Full Menu</a>
+    </div>
+    <div class="col col-lg-7 col-md-12 col-sm-12 col-12 mb-4">
+      <div class="container">
+        <div class="row">
+          {% for dish in dishes %}
+              {% if dish.speacial  %}
+                    <div class="col col-lg-6 col-md-12 col-sm-12 col-12 mb-4">
+                      <div class="card">
+                        <div class="embed-responsive embed-responsive-16by9">
+                           <img alt="Card image cap" class="card-img-top embed-responsive-item" src="{{dish.img.url}}" />
+                        </div>
+                      <div class="card-body">
+                        <h5 class="card-title">{{dish.name}}</h5>
+                        <p class="card-text">{{dish.desc}}</p>
+                      </div>
+                     </div>
+                    </div>
+              {% endif %}
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Counter-->
+{% include 'fareast/counter.html'%}
+
+<div class="container-fluid home-wrapper-contact p-0">
+
+  <div class="row">
+    <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
+      <div id="map"></div>
+    </div>
+    <div class="col col-lg-6 col-md-12 col-sm-12 col-12 px-5 wrapper-form">
+      <form>
+        <div class="form-group">
+          <h5 for="exampleFormControlTextarea1">Get in touch</h5>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" placeholder="Enter Message"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-lg-6 col-md-6">
+            <form>
+              <input type="text" class="form-control" placeholder="Enter your name">
+            </form>
+          </div>
+          <div class="col-sm-12 col-lg-6 col-md-6">
+            <input type="email" class="form-control" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control mt-2" placeholder="Enter Subject">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-outline-success mt-3" style="width:100px;">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'javascript/bag.js'%}"></script>
+
+{% endblock content %}

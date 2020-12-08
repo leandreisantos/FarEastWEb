@@ -1,0 +1,68 @@
+{% extends 'fareast/main.html' %}
+{% load static %}
+{% static "images" as baseURL %}
+{% block content %}
+
+{% include 'fareast/navbar.html' %}
+
+
+{% include 'fareast/welcome_about.html' %}
+
+{% include 'fareast/services.html' %}
+
+<div class="container about_us text-center">
+  <h1 class="font-weight-bolder">OUR MASTER CHEF</h1>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-left">
+      <img src="{% static 'images/imageChef/chef-4.jpg' %}"  class="image-fluid rounded" width="260" height="340">
+        <h5 style="margin-top:30px;">Leandrei Santos</h5>
+        <span class="text-black-50">Restaurant owner</span>
+        <br>
+        <div class="social-chef">
+          <i class="fab fa-facebook-square"></i>
+          <i class="fab fa-twitter-square"></i>
+          <i class="fab fa-google-plus-square"></i>
+          <i class="fab fa-youtube-square"></i>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-left">
+      <img src="{% static 'images/imageChef/chef-2.jpg' %}"  class="image-fluid rounded" width="260" height="340">
+      <h5 style="margin-top:30px;">Danvan Villanueva</h5>
+      <span class="text-black-50">Head Chef</span>
+      <br>
+      <div class="social-chef">
+        <i class="fab fa-facebook-square"></i>
+        <i class="fab fa-twitter-square"></i>
+        <i class="fab fa-google-plus-square"></i>
+        <i class="fab fa-youtube-square"></i>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-left">
+      <img src="{%static 'images/imageChef/chef-3.jpg' %}"  class="image-fluid rounded" width="260" height="340">
+      <h5 style="margin-top:30px;">Alec Villapando</h5>
+      <span class="text-black-50">Chef</span>
+      <br>
+      <div class="social-chef">
+        <i class="fab fa-facebook-square"></i>
+        <i class="fab fa-twitter-square"></i>
+        <i class="fab fa-google-plus-square"></i>
+        <i class="fab fa-youtube-square"></i>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-left">
+      <img src="{% static 'images/imageChef/chef-1.jpg' %}"  class="image-fluid rounded" width="260" height="340">
+      <h5 style="margin-top:30px;">Randell Maquindang</h5>
+      <span class="text-black-50">Chef</span>
+      <br>
+      <div class="social-chef">
+        <i class="fab fa-facebook-square"></i>
+        <i class="fab fa-twitter-square"></i>
+        <i class="fab fa-google-plus-square"></i>
+        <i class="fab fa-youtube-square"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
